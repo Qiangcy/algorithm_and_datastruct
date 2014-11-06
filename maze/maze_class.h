@@ -50,19 +50,22 @@ void Maze::input_maze(Maze* &M)
 void Maze::go_to_maze(Maze* &M)
 {
     int x = 0, y = 0;
-    visit_maze(M, x, y);//down
-    //M->pre_stack.pushme(M->current_point);
+    visit_maze(M, x, y);
+   // M->pre_stack.pushme(M->current_point);
 
     cout<<"M->row is "<<M->row<<endl;
     cout<<"M->col is "<<M->column<<endl;
     char c;
     scanf("%c", &c);
-    while (! M->pre_stack.empty()) {
-        //  while (x+1 != M->row && y+1 != M->column)
-        M->current_point = M->pre_stack.pop();
+    //while (! M->pre_stack.empty())
+    bool pass_flag = 0;
+    while (x+1 != M->row || y+1 != M->column) {
+        if (pass_flag == 0) {
+            M->current_point = M->pre_stack.pop();
+            x = M->current_point.x, y = M->current_point.y;
+        }
         cout<<"####TOP: "<<M->pre_stack.Top()<<"####"<<endl;
         cout<<"pop: last point: ("<<M->pre_point.x<<", "<<M->pre_point.y<<')'<<endl;
-        x = M->current_point.x, y = M->current_point.y;
         print_maze(M);
         cout<<"now(x,y) : ("<<x<<", "<<y<<')'<<endl;
         char c;
@@ -72,48 +75,53 @@ void Maze::go_to_maze(Maze* &M)
             cout<<"right"<<endl;
             char c;
             scanf("%c", &c);
-        M->pre_point.x=M->current_point.x, M->pre_point.y=M->current_point.x;
+            M->pre_point.x=M->current_point.x, M->pre_point.y=M->current_point.x;
+            visit_maze(M, x, y+1);
             M->current_point.y = y = y + 1;
-            visit_maze(M, x, y);
             cout<<"after go : ("<<x<<", "<<y<<')'<<endl;
-            //continue;
+            pass_flag = 1;
+            continue;
         }
         if (M->data[x+1][y] == 1 && x+1 <= M->row) {//down
             cout<<"down"<<endl;
             char c;
             scanf("%c", &c);
-        M->pre_point.x=M->current_point.x, M->pre_point.y=M->current_point.x;
+            M->pre_point.x=M->current_point.x, M->pre_point.y=M->current_point.x;
+            visit_maze(M, x+1, y);
             M->current_point.x = x  = x + 1;
-            visit_maze(M, x, y);
             cout<<"after go : ("<<x<<", "<<y<<')'<<endl;
-         //   continue;
+            pass_flag = 1;
+            continue;
         }
         if (M->data[x-1][y] == 1 && x-1 >= 0) {//up
             cout<<"up"<<endl;
             char c;
             scanf("%c", &c);
-        M->pre_point.x=M->current_point.x, M->pre_point.y=M->current_point.x;
+            M->pre_point.x=M->current_point.x, M->pre_point.y=M->current_point.x;
+            visit_maze(M, x-1, y);
             M->current_point.x = x = x - 1;
-            visit_maze(M, x, y);
             cout<<"after go : ("<<x<<", "<<y<<')'<<endl;
-        //    continue;
+            pass_flag = 1;
+            continue;
         }
         if (M->data[x][y-1] == 1 && y-1 >= 0) {//left
             cout<<"left"<<endl;
             char c;
             scanf("%c", &c);
         M->pre_point.x=M->current_point.x, M->pre_point.y=M->current_point.x;
+            visit_maze(M, x, y-1);
             M->current_point.y  = y = y - 1;
-            visit_maze(M, x, y);
             cout<<"after go : ("<<x<<", "<<y<<')'<<endl;
-           // continue;
+            pass_flag = 1;
+            continue;
         }
+        pass_flag = 0;
 
-        if (x+1 == M->row && y+1 == M->column) {
-            //            M->data[M->pre_point.x][M->pre_point.y] = 3;
-            cout<<"break!!!!!!!!!!!!!"<<endl;
-            break;
-        }
+//        if (x+1 == M->row && y+1 == M->column) {
+//            //            M->data[M->pre_point.x][M->pre_point.y] = 3;
+//            cout<<"break!!!!!!!!!!!!!"<<endl;
+//            break;
+//        }
     }
     if (x+1 != M->row && y+1 != M->column) {
         cout<<"last point: ("<<M->pre_point.x<<", "<<M->pre_point.y<<')'<<endl;
@@ -121,14 +129,16 @@ void Maze::go_to_maze(Maze* &M)
         cout<<"no path to the end!"<<endl;
         M->data[M->current_point.x][M->current_point.y] = 2;
     } else {
-        M->data[M->current_point.x][M->current_point.y] = 3;
+        M->data[M->row-1][M->column-1] = 3;
+        M->data[0][0] = 3;
     }
 
-    //    while (! M->pre_stack.empty()) {
-    //        M->pre_point = M->pre_stack.pop();
-    //        cout<<"path : ("<<M->pre_point.x<<", "<<M->pre_point.y<<')'<<endl;
-    //        M->data[M->pre_point.x][M->pre_point.y] = 3;
-    //    }
+        cout<<"final!!: now(x,y) : ("<<M->current_point.x<<", "<<M->current_point.y<<')'<<endl;
+        while (! M->pre_stack.empty()) {
+            M->pre_point = M->pre_stack.pop();
+            cout<<"!empty, path : ("<<M->pre_point.x<<", "<<M->pre_point.y<<')'<<endl;
+            M->data[M->pre_point.x][M->pre_point.y] = 3;
+        }
     scanf("%c", &c);
 }
 
@@ -150,8 +160,8 @@ void Maze::print_maze(Maze* &M)
             else if (M->data[i][j] == 2)
                 cout<<'x';
             else
-                cout<<'3';
-               // translate_path(M, i, j);
+               // cout<<'3';
+                translate_path(M, i, j);
         }
         cout<<endl;
     }
@@ -160,14 +170,18 @@ void Maze::print_maze(Maze* &M)
 
 void Maze::translate_path(Maze* &M, int x, int y)
 {
-    if (M->data[x+1][y] == 3 )
-        cout<<'d';//down_arrow
-    else if (M->data[x][y+1] == 3)
-        cout<<'r';//right_arrow
-    else if (M->data[x-1][y] == 3)
-        cout<<'u';//up_arrow
-    else if (M->data[x][y-1] == 3)
-        cout<<'L';//left_arrow
-    else
-        cout<<'+';
+    if (x+1==M->row && y+1==M->column)
+        cout<<"%";
+    else {
+        if (M->data[x+1][y] == 3 )
+            cout<<'d';//down_arrow
+        else if (M->data[x][y+1] == 3)
+            cout<<'r';//right_arrow
+        else if (M->data[x-1][y] == 3)
+            cout<<'u';//up_arrow
+        else if (M->data[x][y-1] == 3)
+            cout<<'L';//left_arrow
+        else
+            cout<<'+';
+    }
 }
