@@ -1,13 +1,13 @@
+#include <iostream>
+using namespace std;
 template <typename Type>
 class LinkList  
 {
-private:
+public:
 	Type  data;
 	LinkList* next;
-public:
 	LinkList()
 	{
-		data=0;
 		next=NULL;
 	}
 	LinkList <Type>  ( const LinkList<Type>  & RightSides );
