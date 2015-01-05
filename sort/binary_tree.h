@@ -41,17 +41,26 @@ template <typename Type>
 Binary_tree<Type>* Binary_tree<Type>::search(Binary_tree* &B, Type search_data)
 {
     cout<<"search data: "<<search_data<<endl;
-    if(B->data == search_data)
-        return B;
-    if(search_data < B->data) {
-        if(! B->left_child)
-            return B;
-        B = search(B->left_child, search_data);
-    }else {
-        if(! B->right_child)
-            return B;
-        B = search(B->right_child, search_data);
+    Binary_tree *backup;
+    while(B && B->data!=search_data) {
+        backup  B;
+        if(search_data < B->data)
+            B = B->left_child;
+        else
+            B = B->right_child;
     }
+    return backup;
+//    if(B->data == search_data)
+//        return B;
+//    if(search_data < B->data) {
+//        if(! B->left_child)
+//            return B;
+//        B = search(B->left_child, search_data);
+//    }else {
+//        if(! B->right_child)
+//            return B;
+//        B = search(B->right_child, search_data);
+//    }
 }
 
 template <typename Type>
