@@ -22,16 +22,36 @@ typedef void (*FunType)(Binary_tree* &B);
 };
 
 template <typename Type>
+Binary_tree<Type>* Binary_tree<Type>::insert(Binary_tree* &B, Type insert_data)
+{
+    cout<<"insert"<<endl;
+    if(! B) {
+        B = new Binary_tree;
+        B->data = insert_data;
+        return B;
+    }
+    if(insert_data < B->data)
+        B->left_child = insert(B->left_child, insert_data);
+    else
+        B->right_child = insert(B->right_child, insert_data);
+    return B;
+}
+
+template <typename Type>
 Binary_tree<Type>* Binary_tree<Type>::search(Binary_tree* &B, Type search_data)
 {
-    printf("in\n");
+    cout<<"search data: "<<search_data<<endl;
     if(B->data == search_data)
         return B;
-    if(search_data < B->data)
-        search(B->left_child);
-    else
-        search(B->right_child);
-    return B;
+    if(search_data < B->data) {
+        if(! B->left_child)
+            return B;
+        B = search(B->left_child, search_data);
+    }else {
+        if(! B->right_child)
+            return B;
+        B = search(B->right_child, search_data);
+    }
 }
 
 template <typename Type>

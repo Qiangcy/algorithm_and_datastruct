@@ -4,11 +4,10 @@ int main()
 {
     Binary_tree<int> *root = new Binary_tree<int>;
     root->data = 0;
-    Binary_tree<int> *p = root->insert_right_child(root, 1);
-    p->insert_right_child(p, 2);
-    p->insert_left_child(p, 20);
-    root->insert_left_child(root, 30);
-    root->insert_right_child(root, 3);
+    root->insert(root, 30);
+    root->insert(root, 443);
+    root->insert(root, 12);
+    root->insert(root, 14);
     cout<<endl<<"**pre order**"<<endl;
     void (*FunP)(Binary_tree<int>* &B);
     FunP = &func;
@@ -21,7 +20,9 @@ int main()
     cout<<"********************"<<endl;
     root->level_order(root);
 
-    root->search(root, 3);
+    cout<<endl<<"search"<<endl;
+    root = root->search(root, 29);
+    cout<<"data:"<<root->data<<endl;
     cout<<endl<<"finish"<<endl;
 
 }
