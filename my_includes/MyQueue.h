@@ -11,7 +11,7 @@ private:
 	bool empty_flag;
 	Type data[10];
 public:
-	MyQueue(int a=100) 
+	MyQueue() 
 	{
 		front = 0;
 		rear = 0;
@@ -22,15 +22,14 @@ public:
 	Type Front();
 	Type Rear();
 	bool empty();
-	bool pop();
+    Type pop();
 	bool pushme(Type a);
 	Type& operator [] ( int i )
 	{
 		if ( i<0 || i>9 )
 		{
 			cerr<<"[] out of bounds"<<endl;
-			system("pause");
-			exit(1);                                    //异常退出程序
+			//exit(1);                                    //异常退出程序
 		}
 		return data[i];
 	}
@@ -46,8 +45,9 @@ Type MyQueue<Type>:: Front ()
 template <typename Type> 
 void MyQueue<Type>:: output_information()  
 {
-	cout<<"front is  "<<front<<endl;
-	cout<<"rear is   "<<rear<<endl;
+    cout<<"empty flag is "<<empty_flag;
+	cout<<"front is  "<<front;
+	cout<<" , rear is   "<<rear<<endl;
 }
 template <typename Type> 
 Type MyQueue<Type>:: Rear () 
@@ -56,15 +56,17 @@ Type MyQueue<Type>:: Rear ()
 		if( empty_flag )
 			return data[0];
 		else
-			return data[9];
+			return data[39];
 	return data[rear-1];
 }
 
 template <typename Type>
-bool  MyQueue<Type>::pop() 
+Type  MyQueue<Type>::pop() 
 {
 	front++;
-	return 1;
+	if (rear==front)
+        empty_flag=1;
+	return data[front-1];
 }
 
 template <typename Type>
@@ -72,6 +74,8 @@ bool  MyQueue<Type>::empty()
 {
 	if (rear==front && empty_flag)
 		return 1;
+    else
+        return 0;
 }
 
 
@@ -80,11 +84,11 @@ bool MyQueue<Type>::pushme(Type a)
 {
 	if (front==rear && !empty_flag)
 	{
-		cerr<<"stack is full"<<endl;
+		cerr<<"queue is full"<<endl;
 		return 0;
 	}
 	data[rear++] = a;
-	if (rear>9)
+	if (rear>39)
 		rear = 0;
 	empty_flag = 0;
 	return 1; 

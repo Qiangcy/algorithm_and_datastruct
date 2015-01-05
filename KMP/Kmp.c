@@ -17,24 +17,26 @@ int main()
     Get_Next(sub_string, next);
     for(int i=0; i<10; ++i)
         cout<<next[i]<<' ';
-//    cout<<"KMP"<<KMP(origin_string, sub_string, next)<<endl;
+    cout<<endl<<"KMP"<<endl<<KMP(origin_string, sub_string, next)<<endl;
 }
 
 int KMP(string origin_string, string sub_string, int next[])
 {
     int i=0, j=0, record=0;//sub_string[j]
-    while (j < sub_string.length()) {
-        record = i;
+    while(origin_string[i]) {
         if (origin_string[i] == sub_string[j]) {
-            ++i;
             ++j;
+            record = i;
             cout<<"equal: i is "<<i<<endl;
+            if(record > sub_string.length())
+                break;
+        }else {
+            record = 0;
+            j += next[j];
+            cout<<"else: i is "<<i<<" j is "<<j<<endl;
         }
-        else {
-            j -= next[j];
-            cout<<"else: j is "<<j<<endl;
-        }
-        cout<<"record is "<<record<<endl;
+        ++i;
+       cout<<"end: j is "<<j<<endl;
     }
     return record;
 }
