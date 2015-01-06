@@ -12,6 +12,7 @@ class express_mail
         }
         void input_packages_list(express_mail *& E);
         void output_packages_list(express_mail * E);
+        void get_package(express_mail *& E, int n);
 };
 
 void express_mail::input_packages_list(express_mail *& E)
@@ -19,11 +20,17 @@ void express_mail::input_packages_list(express_mail *& E)
     cout<<"cin packages "<<endl;
     int number;
     cin>>number;
-    package *p = new package();
     for(int i=0; i<number; ++i) {
-        p->input_package_msg(p);
-        E->package_list->insert_element(E->package_list, i, *p);
-        p->output_package_msg(p);
+    package *p = new package();
+        cout<<endl<<"cin number "<<i+1<<" package :   "<<endl;
+        if(i == 0) {
+            p->input_package_msg(p);
+            E->package_list->data = *p;
+            E->package_list->next = NULL;
+        }else {
+            p->input_package_msg(p);
+            E->package_list->insert_element(E->package_list, i, *p);
+        }
     }
 }
 
@@ -33,5 +40,11 @@ void express_mail::output_packages_list(express_mail * E)
         E->package_list->data.output_package_msg( &(E->package_list->data) );
         E->package_list = E->package_list->next;
     }
+}
 
+void express_mail::get_package(express_mail*& E, int n)
+{
+    cout<<"get number "<<n<<"package"<<endl;
+    E->package_list->delete_element(E->package_list, n);
+    cout<<"get finish"<<endl;
 }

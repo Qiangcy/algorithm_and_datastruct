@@ -187,52 +187,59 @@ LinkList <Type>* LinkList<Type>::reverse_list( LinkList <Type>* &L )
 template <typename Type>
 bool LinkList<Type>::delete_element( LinkList <Type>* &L, int n )
 {
+    cout<<"in delete "<<n<<endl;
 	LinkList <Type> *temp=L;
 	if ( n==1 )
 	{
-		if ( L->next==NULL )
-		{
-			L=NULL;
-		}
-		else
-		{
-			L=L->next;
+        cout<<"in 1"<<endl;
+//		if ( L->next==NULL )
+//		{
+//        cout<<"in 2"<<endl;
+//			L=NULL;
+//		}
+//		else
+//		{
+        cout<<"in 3"<<endl;
+		L=L->next;
+//		}
+        cout<<"in 4"<<endl;
 			delete temp;
-		}
 		return true;
 	}
+    else
+    {
+        for ( int i=0; i<n-2  ; i++)
+        {
+            if ( temp->next==NULL || temp->next->next==NULL )
+            {
+                cout<<"É¾³ý´íÎó£¬³¬³öÎ»ÖÃ¡£"<<endl;
+                return false;
+            }
+            temp=temp->next;
+        }
 
-	for ( int i=0; i<n-2  ; i++)
-	{
-		if ( temp->next==NULL || temp->next->next==NULL )
-		{
-			cout<<"É¾³ý´íÎó£¬³¬³öÎ»ÖÃ¡£"<<endl;
-			return false;
-		}
-		temp=temp->next;
-	}
-
-	if ( temp->next==NULL || temp->next->next==NULL )
-	{
-		cout<<"É¾³ý´íÎó£¬³¬³öÎ»ÖÃ¡£"<<endl;
-		return false;
-	}
-	LinkList <Type> *deleteone=temp->next;
-	temp->next=temp->next->next;
-	delete deleteone;
-	return true;
+        if ( temp->next==NULL || temp->next->next==NULL )
+        {
+            cout<<"É¾³ý´íÎó£¬³¬³öÎ»ÖÃ¡£"<<endl;
+            return false;
+        }
+        LinkList <Type> *deleteone=temp->next;
+        temp->next=temp->next->next;
+        delete deleteone;
+        return true;
+    }
 }
 
 
-template <typename Type>
+    template <typename Type>
 void LinkList<Type>::destroy_linklist( LinkList <Type>* &L )
 {
-	while( L!= NULL )
-	{
-		LinkList <Type>* temp = L;
-		L = L->next;
-		delete temp;
-	}
+    while( L!= NULL )
+    {
+        LinkList <Type>* temp = L;
+        L = L->next;
+        delete temp;
+    }
 }
 
 //
