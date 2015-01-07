@@ -15,7 +15,7 @@ public:
 	void create_linklist( LinkList <Type>* &L );
 	void output_element( LinkList <Type>* &L ) const;
 	void find_element( LinkList <Type>* &L, Type C ) const;
-	bool insert_element( LinkList <Type>* &L, int n, Type C );
+	bool insert_element( LinkList <Type>* L, int n, Type C );
 	bool delete_element( LinkList <Type>* &L, int n );
 	void  destroy_linklist( LinkList <Type>* &L );
 	LinkList <Type>* reverse_list( LinkList <Type>* &L );
@@ -124,7 +124,7 @@ void LinkList<Type>::find_element( LinkList <Type>* &L,  Type C  ) const
 
 
 template <typename Type>
-bool LinkList<Type>::insert_element( LinkList <Type>* &L, int n, Type C ) 
+bool LinkList<Type>::insert_element( LinkList <Type>* L, int n, Type C ) 
 {
 	if ( n<0 )
 		cout<<"插入错误，位置不存在"<<endl;
@@ -192,20 +192,20 @@ bool LinkList<Type>::delete_element( LinkList <Type>* &L, int n )
 	if ( n==1 )
 	{
         cout<<"in 1"<<endl;
-//		if ( L->next==NULL )
-//		{
-//        cout<<"in 2"<<endl;
-//			L=NULL;
-//		}
-//		else
-//		{
-        cout<<"in 3"<<endl;
-		L=L->next;
-//		}
+		if ( L->next==NULL )
+		{
+        cout<<"in 2"<<endl;
+			L=NULL;
+		}
+        else
+        {
+            cout<<"in 3"<<endl;
+            L=L->next;
+        }
         cout<<"in 4"<<endl;
-			delete temp;
-		return true;
-	}
+        delete temp;
+        return true;
+    }
     else
     {
         for ( int i=0; i<n-2  ; i++)
