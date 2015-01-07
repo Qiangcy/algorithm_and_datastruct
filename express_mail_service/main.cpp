@@ -4,7 +4,8 @@ int main()
     express_mail *e = new express_mail();
     while(1) {
         cout<<"\n\n********welcome!Please input the number of operation you want to take*********"<<endl;
-        cout<<"1.input packages\t2.output all packages\t\n3.get_package\t4.sort"<<endl;
+        cout<<"\t1.input packages\t2.output all packages\t\n\t3.get_package\t4.sort by phone and time\n\t5.search by name\n"<<endl;
+        char *name;
         char oper = ' ';
         cin>>oper;
         switch(oper) {
@@ -21,6 +22,12 @@ int main()
                       break;
             case '4':
                       e->chosse_sort_packages(e);
+                      break;
+            case '5':
+                      name = new char(100);
+                      cin>>name;
+                      e->search_by_name(e, name);
+                      delete name;
                       break;
             default:
                       cout<<"No operation"<<endl<<"please input ag"<<endl;

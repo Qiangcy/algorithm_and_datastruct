@@ -1,5 +1,7 @@
 #include "../my_includes/LinkList.h"
 #include "package.h"
+#include "string.h"
+
 class express_mail
 {
     public:
@@ -16,6 +18,7 @@ class express_mail
         void swap(LinkList<package> *head, LinkList<package> *&a,LinkList<package> *&b);
         void bubble_sort_packages(express_mail *& E);
         void chosse_sort_packages(express_mail *& E);
+        void search_by_name(express_mail *& E, char *name);
 };
 
 void express_mail::input_packages_list(express_mail *& E)
@@ -181,5 +184,21 @@ void express_mail::chosse_sort_packages(express_mail *& E)
         //        cout<<"first"<<first<<endl;
         //        char x;
         //        cin>>x;
+    }
+}
+
+void express_mail::search_by_name(express_mail *& E, char *name)
+{
+    LinkList<package> *backup = E->package_list;
+    int num = 0;
+    while(E->package_list) {
+        if(strcmp(E->package_list->data.receiver_name, name) != 0) {
+            E->package_list = E->package_list->next;
+            num++;
+        }else {
+            cout<<"Found!!!"<<endl;
+            cout<<num<<endl;
+            E->package_list->data.output_package_msg(&E->package_list->data);
+        }
     }
 }
