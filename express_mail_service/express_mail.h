@@ -137,7 +137,8 @@ void express_mail::chosse_sort_packages(express_mail *& E)
     LinkList<package> *min = E->package_list;
     LinkList<package> *first = E->package_list;
     LinkList<package> *second = E->package_list;
-    LinkList<package> *next = first;
+    long long int number_a, number_b, base;
+    number_a = number_b = base = 0;
     bool first_flag = 1;
     while(first) {
         cout<<"sort start"<<endl;
@@ -148,14 +149,24 @@ void express_mail::chosse_sort_packages(express_mail *& E)
             //            cout<<"secnod "<<second<<endl;
             //            cout<<"second.num"<<second->data.phone_number<<endl;
             //            cout<<"second start"<<endl;
-            if(second->data.phone_number < min->data.phone_number)
-                min = second;
+            //     while(number_a > 10) {
+            //         cout<<number_a<<endl;
+            //         number_a %= base;
+            //         base %= 10;
+            //     }
+            //     base = 10000000000;
+            //     while(number_b > 10) {
+            //         cout<<number_b<<endl;
+            //         number_b %= base;
+            //         base %= 10;
+            //     }
+            if(second->data.receive_time <= min->data.receive_time)
+                if(second->data.phone_number%10 < min->data.phone_number%10)
+                    min = second;
             second = second->next;
         }
-        //next = first->next;
         if(first != min) {
             //output_packages_list(E);
-            //           cout<<"swap start"<<endl;
             swap(E->package_list, first, min);
             if(first_flag) {
                 E->package_list = min;

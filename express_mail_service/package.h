@@ -6,7 +6,8 @@ class package
         char *package_name;
         char *receiver_name;
         char *deliver_name;
-        int phone_number;
+        long long int phone_number;
+        long long int receive_time;
         package()
         {
             package_name = new char(100);
@@ -28,6 +29,8 @@ void package::input_package_msg(package* &P)
     cin>>P->deliver_name;
     cout<<"input phone_number"<<endl;
     cin>>P->phone_number;
+    cout<<"input receive_time"<<endl;
+    cin>>P->receive_time;
 }
 
 void package::output_package_msg(package* P)
@@ -36,5 +39,6 @@ void package::output_package_msg(package* P)
     cout<<" receiver_name: "<<P->receiver_name;
     cout<<" deliver_name: "<<P->deliver_name;
     cout<<" phone_number: "<<P->phone_number;
+    cout<<" receive_time: "<<P->receive_time;
     cout<<endl;
 }
