@@ -199,6 +199,9 @@ void express_mail::search_by_name(express_mail *& E, char *name)
             cout<<"Found!!!"<<endl;
             cout<<num<<endl;
             E->package_list->data.output_package_msg(&E->package_list->data);
+            break;
         }
     }
+    if(! E->package_list)
+            cout<<"NOT  Found!!!"<<endl;
 }
