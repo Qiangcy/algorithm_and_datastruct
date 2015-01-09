@@ -5,12 +5,10 @@
 class express_mail
 {
     public:
-        int number_of_packages;
         LinkList<package> *package_list;
         express_mail()
         {
             package_list = new LinkList<package>;
-            number_of_packages=0;
         }
         void input_packages_list(express_mail *& E);
         void output_packages_list(express_mail *& E);
