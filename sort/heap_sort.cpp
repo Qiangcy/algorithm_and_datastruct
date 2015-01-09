@@ -2,7 +2,7 @@
 #include <stdio.h>
 using namespace std;
 void heap_sertion_sort(int *a, int length);
-void heap_adjust(int *a, int length);
+void heap_adjust(int *a, int i, int length);
 void swap( int &a, int &b );
 int main()
 {
@@ -18,31 +18,32 @@ int main()
 
 void heap_sertion_sort(int *a, int length)
 {
+    for(int i=(length-1)/2; i>0; i--) {
+        heap_adjust(a, i, length);
+    }
 }
 
-void heap_adjust(int *a, int length)
+void heap_adjust(int *a, int i, int length)
 {
     int temp = 0;
-    for(int i=(length-1)/2; i>0; i--) {
-        temp = a[i];
-        for(int j=(i+1)*2-1; j<length-1; j=i*2+1) {
-            if(a[2*j+1] > a[j]) {
-                swap(a[2*j+1], a[j]);
-                //a[j] = a[2*j+1];
-                //a[2*j+1] = temp;
-            }
-            if(a[2*j+2] > a[j]) {
-                swap(a[2*j+2], a[j]);
-                //a[j] = a[2*j+2];
-                //a[2*j+2] = temp;
-            }
+    temp = a[i];
+    for(int j=(i+1)*2-1; j<length-1; j=i*2+1) {
+        if(a[2*j+1] > a[j]) {
+            swap(a[2*j+1], a[j]);
+            //a[j] = a[2*j+1];
+            //a[2*j+1] = temp;
+        }
+        if(a[2*j+2] > a[j]) {
+            swap(a[2*j+2], a[j]);
+            //a[j] = a[2*j+2];
+            //a[2*j+2] = temp;
         }
     }
 }
 
 void swap( int &a, int &b )
 {
-	int temp=b;
-	b=a;
-	a=temp;
+    int temp=b;
+    b=a;
+    a=temp;
 }
