@@ -81,7 +81,7 @@ void Binary_tree<Type>::post_order(Binary_tree* &B)
 }
 
 template <typename Type>
-void Binary_tree<Type>::level_order(Binary_tree* &B)
+void Binary_tree<Type>::level_order(Binary_tree* &B)//can use queue to implement
 {
     vector< Binary_tree* > vec;
     vec.push_back(B);
@@ -90,10 +90,10 @@ void Binary_tree<Type>::level_order(Binary_tree* &B)
         end = vec.size();
         while(cur < end) {
             cout<<vec[cur]->data<<' ';
-            if (vec[cur]->right_child)
-                vec.push_back(vec[cur]->right_child);
             if (vec[cur]->left_child)
                 vec.push_back(vec[cur]->left_child);
+            if (vec[cur]->right_child)
+                vec.push_back(vec[cur]->right_child);
             ++cur;
         }
         cout<<endl;
