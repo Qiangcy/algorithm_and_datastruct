@@ -159,28 +159,41 @@ bool LinkList<Type>::insert_element( LinkList <Type>* L, int n, Type C )
 template <typename Type>
 LinkList <Type>* LinkList<Type>::reverse_list( LinkList <Type>* &L )
 {
-	if ( L->next ==NULL )//一个结点的情况
-		return L;
-	LinkList <Type> *q=new  LinkList <Type>;
-	LinkList <Type> *o=new  LinkList <Type>;
-	q=L->next;
-	o=q->next;
-	L->next=NULL;
-	while( o!=NULL && o->next != NULL )
-	{
-		q->next=L;
-		L=q;
-		q=o;
-		o=o->next;
-	}
-	q->next=L;
-	if ( o!=NULL )//两个以上结点的情况，处理o
-	{
-		o->next=q;
-		return o;
-	}
-	else
-		return q;//两个结点的情况
+	LinkList <Type> *p, *temp, *head;
+    head= L;
+    p = head->next;
+    head->next = NULL;
+    while(p) {
+        temp = p->next;
+
+        p->next = head;
+        head = p;
+
+        p = temp;
+    }
+    return head;
+//	if ( L->next ==NULL )//一个结点的情况
+//		return L;
+//	LinkList <Type> *q=new  LinkList <Type>;
+//	LinkList <Type> *o=new  LinkList <Type>;
+//	q=L->next;
+//	o=q->next;
+//	L->next=NULL;
+//	while( o!=NULL && o->next != NULL )
+//	{
+//		q->next=L;
+//		L=q;
+//		q=o;
+//		o=o->next;
+//	}
+//	q->next=L;
+//	if ( o!=NULL )//两个以上结点的情况，处理o
+//	{
+//		o->next=q;
+//		return o;
+//	}
+//	else
+//		return q;//两个结点的情况
 
 }
 
