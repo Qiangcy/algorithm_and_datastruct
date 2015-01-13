@@ -1,17 +1,45 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "shell_sort.h"
-int main()
+#include<iostream>
+using namespace std;
+void shellsort(int a[],int length);
+int main()//选择排序
 {
-    int i,a[12] = {-111,43,5,47,1,19,43,11,59,15,48,41};            /*初始化序列，a[0]可任意置数*/
-    printf("The orginal data array is\n\n") ;
-    for(i=1;i<=11;i++)                            /*显示原序列之中的元素*/
-        printf("%d ",a[i]);
-	    printf("\n\nThe result of Shell's sorting for the array is");
-    shellsort(a,11);                                /*执行希尔排序*/
-    getchar();
-	system("pause");
-    return 0;
+	int a[]= {0, 9,24, 13, 87, 90, 6, 74, 100, 39, 31,33,442,321,33};//
+	int length=sizeof(a)/4;
+	int temp;
+	for (int i=0; i<length; i++ )
+        cout<<a[i]<<" ";
+    cout<<endl<<"after sort"<<endl;
+    shellsort(a, length);
+	for (int i=0; i<length; i++ )
+        cout<<a[i]<<" ";
+    cout<<endl;
+
 }
 
+void shellsort(int a[],int length)
+{
+    int increment, key;
+    increment = length;
+    while(increment > 1) {
+        increment = increment/3 + 1;
+        cout<<"increment is :"<<increment<<endl;
+        char z;
+        cin>>z;
+        for(int i=0; i<length; i+=increment) {
+            key = a[i];
+            cout<<"key is "<<key<<endl;
+            int j =i-increment;
+            while(j>=0 && key<a[j]) {
+                cout<<"a["<<j<<"]  "<<a[j]<<endl;
+                a[j+increment] = a[j];
+                j-=increment;
+            }
+            cout<<"j: "<<j+increment<<"  a["<<j+increment<<"]  "<<a[j]<<"= "<<key<<endl;
+            a[j+increment] = key;
+        }
 
+        for (int i=0; i<length; i++ )
+            cout<<a[i]<<" ";
+        cout<<endl<<"next"<<endl<<endl;
+    }
+}
