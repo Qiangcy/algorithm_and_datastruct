@@ -4,7 +4,6 @@ using namespace std;
 void heap_sertion_sort(int *a, int length);
 void heap_adjust(int *a, int i, int length);
 void heap_sort(int *a, int length);
-void swap( int &a, int &b );
 void output(int *a, int length);
 int main()
 {
@@ -58,10 +57,4 @@ void heap_sort(int *a, int length)
         heap_sertion_sort(a, i);
         swap(a[0], a[i]);
     }
-}
-void swap( int &a, int &b )
-{
-    int temp=b;
-    b=a;
-    a=temp;
 }
