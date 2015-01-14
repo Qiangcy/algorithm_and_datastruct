@@ -244,12 +244,13 @@ bool LinkList<Type>::delete_element( LinkList <Type>* &L, int n )
 }
 
 
-    template <typename Type>
+template <typename Type>
 void LinkList<Type>::destroy_linklist( LinkList <Type>* &L )
 {
+    LinkList <Type>* temp;
     while( L!= NULL )
     {
-        LinkList <Type>* temp = L;
+        temp = L;
         L = L->next;
         delete temp;
     }
