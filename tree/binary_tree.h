@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "../my_includes/MyQueue.h"
 using namespace std;
 template <typename Type>
 class Binary_tree {
@@ -83,19 +84,33 @@ void Binary_tree<Type>::post_order(Binary_tree* &B)
 template <typename Type>
 void Binary_tree<Type>::level_order(Binary_tree* &B)//can use queue to implement
 {
-    vector< Binary_tree* > vec;
-    vec.push_back(B);
-    int cur = 0, end = 1;
-    while(cur < vec.size()) {
-        end = vec.size();
-        while(cur < end) {
-            cout<<vec[cur]->data<<' ';
-            if (vec[cur]->left_child)
-                vec.push_back(vec[cur]->left_child);
-            if (vec[cur]->right_child)
-                vec.push_back(vec[cur]->right_child);
-            ++cur;
-        }
-        cout<<endl;
+//    vector< Binary_tree* > vec;
+//    vec.push_back(B);
+//    int cur = 0, end = 1;
+//    while(cur < vec.size()) {
+//        end = vec.size();
+//        while(cur < end) {
+//            cout<<vec[cur]->data<<' ';
+//            if(vec[cur]->left_child)
+//                vec.push_back(vec[cur]->left_child);
+//            if(vec[cur]->right_child)
+//                vec.push_back(vec[cur]->right_child);
+//            ++cur;
+//        }
+//        cout<<endl;
+//    }
+
+    /*other implementation using queue*/
+    MyQueue< Binary_tree* > q;
+    Binary_tree *temp = B;
+    q.pushme(B);
+    while(! q.empty()) {
+        temp = q.pop();
+        cout<<temp->data<<" ";
+        if(temp->left_child)
+            q.pushme(temp->left_child);
+        if(temp->right_child)
+            q.pushme(temp->right_child);
     }
+    cout<<endl;
 }
