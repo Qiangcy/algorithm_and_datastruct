@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
-#define RANNUM 30000
+#define RANNUM 13
 
 void sort(int a[], int swap[], int n);
 void merage_sort(int a[], int swap[], int k, int n);
@@ -58,7 +58,7 @@ void merage_sort(int a[], int swap[], int k, int n)
         int sl = fr+1, sr = sl+k;
         if(sr+1 >= n)
             sr = n - 1;
-		//printf("\nfl is  %d,  fr is  %d,  sl is  %d, sr is  %d\n\n", fl, fr, sl, sr);
+		printf("\nfl is  %d,  fr is  %d,  sl is  %d, sr is  %d\n\n", fl, fr, sl, sr);
 		for(; fl<=fr && sl<=sr; ++m) {
 			if(a[fl] < a[sl]) {
 				swap[m] = a[fl];
@@ -80,17 +80,17 @@ void merage_sort(int a[], int swap[], int k, int n)
 			++sl;
 		}
 
-//		for (int i=0; i<n; ++i)
-//			printf(" %d  ", swap[i]);
-		fl = sr + 1;
-	}
-	for(; fl<n; ++fl) {
-		swap[m] = a[fl];
-		++fl;
-		++m;
-	}
-//	for(int i=0; i<n; ++i) {
-//		a[i] = swap[i];
-//	}
-	printf("\n\n******************************************\n\n");
+        for (int i=0; i<n; ++i)
+            printf(" %d  ", swap[i]);
+        fl = sr + 1;
+    }
+    for(; fl<n; ++fl) {
+        swap[m] = a[fl];
+        ++fl;
+        ++m;
+    }
+    for(int i=0; i<n; ++i) {
+        a[i] = swap[i];
+    }
+    printf("\n\n******************************************\n\n");
 }

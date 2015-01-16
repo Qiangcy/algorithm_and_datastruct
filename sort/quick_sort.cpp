@@ -41,7 +41,7 @@ int partition(int *a, int left, int right)
 //    printf("ina \n");
     int pivot_key = a[left];
     while(left < right) {
-        while(left<right && pivot_key<=a[right]) {
+        while(left<right && a[right]>=pivot_key) {
             --right;
         }
 //        printf("\n left: %d, right: %d ", left, right);

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "../my_includes/MyQueue.h"
 using namespace std;
 template <typename Type>
 class Binary_tree {
@@ -14,14 +15,14 @@ class Binary_tree {
         Binary_tree* search(Binary_tree* &B, Type search_data);
         Binary_tree* insert_left_child (Binary_tree* &B, Type insert_data);
         Binary_tree* insert_right_child (Binary_tree* &B, Type insert_data);
-typedef void (*FunType)(Binary_tree* &B);
+        typedef void (*FunType)(Binary_tree* &B);
         void pre_order (Binary_tree* &B, FunType fp);
         void in_order (Binary_tree* &B);
         void post_order (Binary_tree* &B);
         void level_order (Binary_tree* &B);
 };
 
-template <typename Type>
+    template <typename Type>
 Binary_tree<Type>* Binary_tree<Type>::insert(Binary_tree* &B, Type insert_data)
 {
     cout<<"insert"<<endl;
@@ -37,7 +38,7 @@ Binary_tree<Type>* Binary_tree<Type>::insert(Binary_tree* &B, Type insert_data)
     return B;
 }
 
-template <typename Type>
+    template <typename Type>
 Binary_tree<Type>* Binary_tree<Type>::search(Binary_tree* &B, Type search_data)
 {
     cout<<"search data: "<<search_data<<endl;
@@ -50,20 +51,20 @@ Binary_tree<Type>* Binary_tree<Type>::search(Binary_tree* &B, Type search_data)
             B = B->right_child;
     }
     return backup;
-//    if(B->data == search_data)
-//        return B;
-//    if(search_data < B->data) {
-//        if(! B->left_child)
-//            return B;
-//        B = search(B->left_child, search_data);
-//    }else {
-//        if(! B->right_child)
-//            return B;
-//        B = search(B->right_child, search_data);
-//    }
+    //    if(B->data == search_data)
+    //        return B;
+    //    if(search_data < B->data) {
+    //        if(! B->left_child)
+    //            return B;
+    //        B = search(B->left_child, search_data);
+    //    }else {
+    //        if(! B->right_child)
+    //            return B;
+    //        B = search(B->right_child, search_data);
+    //    }
 }
 
-template <typename Type>
+    template <typename Type>
 Binary_tree<Type>* Binary_tree<Type>::insert_left_child(Binary_tree* &B, Type insert_data)
 {
     Binary_tree *insert_node = new Binary_tree;
@@ -75,7 +76,7 @@ Binary_tree<Type>* Binary_tree<Type>::insert_left_child(Binary_tree* &B, Type in
 }
 
 
-template <typename Type>
+    template <typename Type>
 Binary_tree<Type>* Binary_tree<Type>::insert_right_child(Binary_tree* &B, Type insert_data)
 {
     Binary_tree *insert_node = new Binary_tree;
@@ -86,7 +87,7 @@ Binary_tree<Type>* Binary_tree<Type>::insert_right_child(Binary_tree* &B, Type i
     return B->right_child;
 }
 
-template <typename Type>
+    template <typename Type>
 void Binary_tree<Type>::pre_order(Binary_tree* &B, FunType fp)
 {
     if(!B)
@@ -98,7 +99,7 @@ void Binary_tree<Type>::pre_order(Binary_tree* &B, FunType fp)
     pre_order(B->right_child, fp);
 }
 
-template <typename Type>
+    template <typename Type>
 void Binary_tree<Type>::in_order(Binary_tree* &B)
 {
     if(!B)
@@ -110,7 +111,7 @@ void Binary_tree<Type>::in_order(Binary_tree* &B)
     in_order(B->right_child);
 }
 
-template <typename Type>
+    template <typename Type>
 void Binary_tree<Type>::post_order(Binary_tree* &B)
 {
     if(!B)
@@ -122,7 +123,7 @@ void Binary_tree<Type>::post_order(Binary_tree* &B)
         cout<<' '<<B->data<<"is a leaf";
 }
 
-template <typename Type>
+    template <typename Type>
 void Binary_tree<Type>::level_order(Binary_tree* &B)
 {
     vector< Binary_tree* > vec;
