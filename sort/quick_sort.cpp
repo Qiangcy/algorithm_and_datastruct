@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <sys/time.h>
-#define RANNUM 30000
+#define RANNUM 15
 
 int partition(int *a, int left, int right);
 void swap( int &a, int &b );
@@ -16,14 +16,12 @@ int main()
         a[i] = rand() % RANNUM;
     }
     int length = sizeof(a)/sizeof(int);
-    //for(i=0; i<length; ++i)
-    //    printf("%d ", a[i]);
+    for(i=0; i<length; ++i)
+        printf("%d ", a[i]);
     printf("length: %d ", length);
     printf("\nsecond\n");
     gettimeofday(&starttime, 0);
     time_t first = clock();
-    quick_sort(a, 0, length);
-    quick_sort(a, 0, length);
     quick_sort(a, 0, length);
     time_t second = clock();
     printf("First Clock end :%lf ", second-first);
@@ -32,8 +30,8 @@ int main()
     timeuse /= 1000;
     printf("Clock end:%lf ", timeuse);
     printf("\nend\n");
-    //for(i=0; i<length; ++i)
-    //    printf("%d ", a[i]);
+    for(i=0; i<length; ++i)
+        printf("%d ", a[i]);
 }
 
 int partition(int *a, int left, int right)
@@ -41,16 +39,17 @@ int partition(int *a, int left, int right)
 //    printf("ina \n");
     int pivot_key = a[left];
     while(left < right) {
-        while(left<right && a[right]>=pivot_key) {
+        while(left<right && a[right]>=pivot_key)
             --right;
-        }
+       a[left] = a[right];
 //        printf("\n left: %d, right: %d ", left, right);
-        swap(a[left], a[right]);
-        while(left<right && a[left]<=pivot_key) {
+//        swap(a[left], a[right]);
+        while(left<right && a[left]<=pivot_key)
             ++left;
-        }
-        swap(a[left], a[right]);
+        a[right] = a[left];
+//        swap(a[left], a[right]);
     }
+    a[left] = pivot_key;
     return left;
 }
 
