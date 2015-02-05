@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-void my_sprintf(double val, int precision, char format);
+void my_sprintf(long double val, int precision, char format);
 using namespace std;
 int main()
 {
@@ -18,7 +18,7 @@ int main()
     my_sprintf(val, precision, format);
 }
 
-void my_sprintf(double val, int precision, char format)
+void my_sprintf(long double val, int precision, char format)
 {
     int mysign = 1, exponent = 0;
     if(format == 'e' || format == 'g') {
@@ -27,6 +27,7 @@ void my_sprintf(double val, int precision, char format)
             while(val >= 10) {
                 val /= 10;
                 ++exponent;
+                printf("origin with e is %Lf\n", val);
             }
         }else if(val < 1) {
             mysign = 0;
@@ -35,6 +36,7 @@ void my_sprintf(double val, int precision, char format)
                 ++exponent;
             }
         }
+//        precision -= exponent;
 
         if(format == 'g') {
             if(exponent < -4)
@@ -43,9 +45,10 @@ void my_sprintf(double val, int precision, char format)
                 format = 'f';
         }
     }
-    printf(" \n after e :  %f exponent is  %d  \n" , val, exponent);
+    printf(" \n after e :  %Lf exponent is  %d  \n" , val, exponent);
 
-    double float_val, temp, back_up = val;
+    long double float_val;
+    double temp, back_up = val;
     int len = 0;
     int base = 10, up_to_integer = 0;
     int i = 0, j = 0;
@@ -53,27 +56,31 @@ void my_sprintf(double val, int precision, char format)
     const char *digits;
     digits = "0123456789ABCDEFX";
 
-    float_val = val - (int)val;
-    printf("origin is %f\n", val);
-    cout<<"float_val after (int) is "<<float_val<<endl;
-    for(int i=0; i<precision; ++i)
-        float_val *= 10;
 
-    printf("before round is %f \n", float_val);
-    printf("after  round is %f \n", round(float_val));
+    printf("(int)val is  %d \n", (int)val);
+    float_val = val - (int)val;
+    printf("origin is %Lf\n", val);
+    cout<<"float_val after (int) is "<<float_val<<endl;
+    for(int i=0; i<precision; ++i) {
+        float_val *= 10;
+        printf("float_val is %Lf \n", float_val);
+    }
+
+    printf("before round is %Lf \n", float_val);
+    printf("after  round is %Lf \n", roundl(float_val));
 
     temp = float_val = round(float_val);
-    printf("temp %f \n log 10 %f \n log 10 %f\n", temp, log10(temp), floor(log10(temp))+1);
+//    printf("temp %Lf \n log 10 %f \n log 10 %Lf\n", temp, log10(temp), floor(log10(temp))+1);
     while(temp != 0) {
         temp = (int)temp / 10;
         ++i;
     }
     cout<<"i is : "<<i<<endl;
     if(i > precision) {
-        printf("%f\n", val);
+        printf("%Lf\n", val);
         val += 1;
         up_to_integer = 1;
-        printf("up to integer and val is  %f\n", val);
+        printf("up to integer and val is  %Lf\n", val);
     }
     else
         cout<<"NO up to integer"<<endl;
@@ -99,7 +106,7 @@ void my_sprintf(double val, int precision, char format)
     if(precision != 0)
         buf[len++] = '.';
     cout<<endl<<"second buf is "<<buf<<endl;
-    printf("float_val is %f\n", float_val);
+    printf("float_val is %Lf\n", float_val);
     i = len;
     if(up_to_integer) {
         for(j=0; j<precision; ++j,++i)
@@ -107,13 +114,14 @@ void my_sprintf(double val, int precision, char format)
         buf[i] = '\0';
     }else {
         while(float_val != 0) {
-            j = (int)float_val%base;
-            float_val = (int)float_val/base;
+            j = (long long int)float_val%base;
+            float_val = (long long int)float_val/base;
             buf[i++] = digits[j];
-            //cout<<" and j is "<<j<<' ';
+            cout<<" and j is "<<j<<' ';
         }
         buf[i] = '\0';
 
+    cout<<endl<<"float  result is  "<<buf<<endl;
         j = len;
         while(--i > j) {
             char tmp = buf[j];
@@ -123,6 +131,7 @@ void my_sprintf(double val, int precision, char format)
         }
     }
 
+    cout<<endl<<"final result is  "<<buf<<endl;
     len = strlen(buf);
     if(format == 'e') {
         buf[len++] = 'e';
@@ -158,6 +167,6 @@ void my_sprintf(double val, int precision, char format)
         }
 
     }
-    printf("\nvalue %f using sprintf", back_up);
+    printf("\nvalue %Lf using sprintf", back_up);
     cout<<endl<<"****result is  "<<buf<<"**********"<<endl;
 }
