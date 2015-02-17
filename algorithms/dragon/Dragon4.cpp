@@ -682,7 +682,7 @@ tU32 Dragon4 (const tU64 mantissa, const tS32 exponent, const tU32 mantissaHighB
         roundDown = compare < 0;
 
         if(compare == 0)
-            roundDown = (outputDigit & 1) == 0;
+            roundDown = 1;//(outputDigit & 1) == 0;
     }
 
     if(roundDown) {

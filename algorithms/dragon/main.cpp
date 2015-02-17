@@ -38,8 +38,17 @@ int main()
 {
 	const tU32 valBuffSize = 2048;
 	tC8 valBuff[valBuffSize];
-	tU32 printLen = PrintFloat64(valBuff, valBuffSize, 3.14159265358979323846, PrintFloatFormat_Scientific, 10);
-    printf("result is %s \n", valBuff);
+    double val;
+    int precision;
+    printf("please input value\n");
+    scanf("%lf", &val);
+    printf("please input precision\n");
+    scanf("%d", &precision);
+	tU32 printLen = PrintFloat64(valBuff, valBuffSize, val, PrintFloatFormat_Positional, precision);
+    printf("PrintFloatFormat_Positional is %s \n", valBuff);
+    printf("num is %d \n", printLen);
+	printLen = PrintFloat64(valBuff, valBuffSize, val, PrintFloatFormat_Scientific, precision);
+    printf("PrintFloatFormat_Scientific result is %s \n", valBuff);
     printf("num is %d \n", printLen);
     return 0;
 
