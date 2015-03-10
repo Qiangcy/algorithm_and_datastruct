@@ -20,6 +20,17 @@ static inline bool is_space(char c)
 
 char *shrink_space(char *dest, const char *src, size_t n)
 {
+    /* better inplementation */
+    size_t i=0, j=0;
+    while(i<n && src[i]) {
+        if(is_space(src[i])) {
+            dest[j++] = ' ';
+            while(is_space(src[++i]))
+                ;
+        }else
+            dest[j++] = src[i++];
+    }
+    /* my inplementation
     size_t i, j;
     for(j=0,i=0; i<n && src[i]!='\0'; ++i) {
         if(is_space(src[i]) && is_space(src[i+1])) {
@@ -29,6 +40,7 @@ char *shrink_space(char *dest, const char *src, size_t n)
             ++j;
         }
     }
+    */
     for(; i<n; ++i)
         dest[i] = '\0';
     return dest;
