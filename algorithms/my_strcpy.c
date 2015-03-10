@@ -10,7 +10,7 @@ char *my_strcpy(char *dest, const char*src)
     return temp;
 }
 
-bool is_space(char c)
+static inline bool is_space(char c)
 {
     if(c==' ' || c=='\t' || c=='\n' || c=='\r')
         return true;
