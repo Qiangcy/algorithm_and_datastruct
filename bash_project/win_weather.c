@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <windows.h>
 
 #include <iostream>
 #include <string>
@@ -12,39 +13,29 @@ int main()
     struct tm *p;
     time(&timep);
     p = gmtime(&timep); //把日期和时间转换为格林威治(GMT)时间的函数
-    const char* weather_table[]={"1-5", "1-20", "2-3", "2-18", "3-5", "3-20", "4-4", "4-19", "5-5", "5-20", "6-5", "6-21", "7-6", "7-22", "8-7", "8-22", "9-7", "9-22", "10-8", "10-23", "11-7", "11-22", "12-6", "12-21"};
+    int weather_table[]={105, 120, 203, 218, 305, 320, 404, 419, 505, 520, 605, 621, 706,
+        722, 807, 822, 907, 922, 1008, 1023, 1107, 1122, 1206, 1221,
+        1299};//last one just to simply the judge
 
-    char *today = (char*)malloc(20);
-    //char *today = new char(20);
-    sprintf(today, "%d-%d", 1+p->tm_mon, p->tm_mday);
-    printf("today :  %s\n", today);
+    int today = (1+p->tm_mon)*100 + p->tm_mday;
+    today = 106;
+    //printf("today :  %d\n", today);
     int i;
-    for(i=0; weather_table[i]; ++i) {
-        int state = strcmp(today, weather_table[i]);
-        if(!state) {
-            cout<<"true: i is"<<i<<endl;
-            break;
-        }else if(state > 0) {
-            //cout<<weather_table[i]<<endl;
-            cout<<"true: i is"<<i<<endl;
-        }else {
-            cout<<weather_table[i]<<endl;
-            cout<<"else: i is"<<i<<endl;
-            break;
-        }
+    for(i=0; today>weather_table[i]; ++i)
+        /* do nothing */;
+    if(i == 0) {
+        if(today == weather_table[0])
+            i = 1;
+        else
+            i = 24;
     }
-    //printf("Month:  %d\n", 1+p->tm_mon);
-    //printf("Day:  %d\n", p->tm_mday);
-    //printf("Year:  %d\n", 1900+p->tm_year);
-    //printf("Hour:  %d\n", p->tm_hour);
-    //printf("Minute:  %d\n", p->tm_min);
-    //printf("Second:  %d\n",  p->tm_sec);
-    //printf("Weekday:  %d\n", p->tm_wday);
-    //printf("Days:  %d\n", p->tm_yday);
-    //printf("Isdst:  %d\n", p->tm_isdst);
+    char *picture_path = (char*)malloc(200);
+    sprintf(picture_path, "D:\\weather\\d.jpg", i);
+    cout<<picture_path<<endl;
+//    cout<<strlen(picture_path)<<endl;
+    SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0,(PVOID)picture_path, SPIF_UPDATEINIFILE+SPIF_SENDWININICHANGE);
 }
 
-//wallpaper.c
 //by onezeros@yahoo.cn||Zhijie Lee
 //usage:wallpaper "full directory path" interval
 //			interval is in minutes
