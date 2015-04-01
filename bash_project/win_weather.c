@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <windows.h>
 
 #include <iostream>
 #include <string>
@@ -18,7 +17,6 @@ int main()
         1299};//last one just to simply the judge
 
     int today = (1+p->tm_mon)*100 + p->tm_mday;
-    today = 106;
     //printf("today :  %d\n", today);
     int i;
     for(i=0; today>weather_table[i]; ++i)
@@ -30,10 +28,11 @@ int main()
             i = 24;
     }
     char *picture_path = (char*)malloc(200);
-    sprintf(picture_path, "D:\\weather\\d.jpg", i);
+    sprintf(picture_path, "gsettings set org.gnome.desktop.background picture-uri \"file:///home/yonghao/Pictures/weather/%d.jpg\"", i);
     cout<<picture_path<<endl;
-//    cout<<strlen(picture_path)<<endl;
-    SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0,(PVOID)picture_path, SPIF_UPDATEINIFILE+SPIF_SENDWININICHANGE);
+    //    cout<<strlen(picture_path)<<endl;
+    system(picture_path);
+    //  SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0,(PVOID)picture_path, SPIF_UPDATEINIFILE+SPIF_SENDWININICHANGE);
 }
 
 //by onezeros@yahoo.cn||Zhijie Lee
