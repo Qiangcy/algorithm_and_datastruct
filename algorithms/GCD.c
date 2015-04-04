@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define M 3
+int b[M] = {1, 2, 3};
 #define N 40
 int a[N];
 
@@ -127,15 +129,29 @@ void print_numbers(void)
 
 void diamod(int num, char graph)
 {
-    if(num%2 == 0) {//num & 1
+    if(! num&1) {// %2 == 0
         printf("wrong\n");
         return;
     }
-    int half, i;
-    half = num/2;
-    for(i=0; i<=half; ++i) {
+    int i, j, count;
+    count = -1;
+    for(i=num/2; i>=0; --i) {
+        count += 2;
+        for(j=i; j>0; --j)
+            printf("\t");
+        for(j=count; j>0; --j)
+            printf("%c\t", graph);
+        printf("\n");
     }
 
+    for(i=num/2+1; i<num; ++i) {
+        for(j=i-num/2; j>0; --j)
+            printf("\t");
+        for(j=count-2; j>0; --j)
+            printf("%c\t", graph);
+        printf("\n");
+        count -= 2;
+    }
 }
 
 void gen_random(int upper_bound)
@@ -145,54 +161,62 @@ void gen_random(int upper_bound)
         a[i] = rand() % upper_bound;
 }
 
-int main(void)
+int countbit(unsigned int x)
 {
-    int i, histogram[10] = {};
-    struct Ragtional aa = make_rational(2, 3);
-    struct Ragtional bb = make_rational(-1, 8);
-    print_rational(add_rational(aa, bb));
-    print_rational(mul_rational(aa, bb));
-    print_rational(div_rational(aa, bb));
-
-
-    gen_random(10);
-    for (i = 0; i < N; i++)
-        ++histogram[a[i]];
-
-    int j, sum;
-    for(i=0; i<=9; i++)
-        printf("%d ", i);
-    printf("\n");
-    for(i=0; i<=9; i++)
-        printf("%d ", histogram[i]);
-    printf("\n");
-    do {
-        sum = 0;
-        for(i=0; i<=9; i++)
-            sum += histogram[i];
-        for(j=0; j<=9; ++j) {
-            if(histogram[j]!=0) {
-                printf("* ");
-                --histogram[j];
-            }else
-                printf("  ");
-        }
-        printf("\n");
-    } while(sum != 0);
-    return 0;
+    int i = 31, count = 0;
+    for(; i>-1; --i) {
+        printf("%d", (x>>i)&1);
+        if((x>>i)&1==1)
+            ++count;
+    }
+    //printf("\ncount is %d\n ", count);
+    return count;
 }
+
+void full_permutation(int b[M])
+{
+}
+
 
 //int main(void)
 //{
-//    int a, b, c;
-//    scanf("%d, %d", &a, &b);
-//    printf("GCD result is %d\n", GCD(a, b));
-//    printf("W_GCD result is %d\n", GCD(a, b));
-//    scanf("%d", &c);
-//    printf("Fibonacci result is %d\n", Fibonacci(c));
-//    printf("w_Fibonacci result is %d\n", w_Fibonacci(c));
-//    printf("\n\n Count %d\n", count());
-//    printf("\n\n factorial %d\n", factorial(10));
-//    printf("\n\n printf_number \n");
-//    print_numbers();
+//    int i, histogram[10] = {};
+//    struct Ragtional aa = make_rational(2, 3);
+//    struct Ragtional bb = make_rational(-1, 8);
+//    print_rational(add_rational(aa, bb));
+//    print_rational(mul_rational(aa, bb));
+//    print_rational(div_rational(aa, bb));
+//
+//    int tmp = 1;
+//    printf("countbit is %d\n", countbit(tmp));
+//
+//    gen_random(10);
+//    for (i = 0; i < N; i++)
+//        ++histogram[a[i]];
+//
+//    int j, sum;
+//    for(i=0; i<=9; i++)
+//        printf("%d ", i);
+//    printf("\n");
+//    for(i=0; i<=9; i++)
+//        printf("%d ", histogram[i]);
+//    printf("\n");
+//    do {
+//        sum = 0;
+//        for(i=0; i<=9; i++)
+//            sum += histogram[i];
+//        for(j=0; j<=9; ++j) {
+//            if(histogram[j]!=0) {
+//                printf("* ");
+//                --histogram[j];
+//            }else
+//                printf("  ");
+//        }
+//        printf("\n");
+//    } while(sum != 0);
+//    return 0;
 //}
+
+int main(void)
+{
+}
