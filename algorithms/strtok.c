@@ -25,7 +25,7 @@ char *mystrtok(char *str, const char *delim)
 {
     static char *saver;
     char *head = str;
-    if(str != NULL)
+    if(str)
         saver = str;
     else
         head = saver;
