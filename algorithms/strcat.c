@@ -46,7 +46,7 @@ int mymemcmp(const void *buf1, const void *buf2, unsigned int count)
     /* linux implementation */
     const char *p1, *p2;
     int res = 0;
-    for(p1=buf1, p2=buf2; count>(unsigned int)0; ++p1, ++p2, --count)
+    for(p1=(char*)buf1, p2=(char*)buf2; count>(unsigned int)0; ++p1, ++p2, --count)
         if((res = *p1 - *p2) != 0)
             break;
     return res;
@@ -64,6 +64,28 @@ int mymemcmp(const void *buf1, const void *buf2, unsigned int count)
        */
 }
 
+char *mystrchr(const char* _Str,int _Val)
+{
+    while(*_Str++) {
+        if(*_Str == _Val)
+            return (char*)_Str;
+    }
+    return NULL;
+}
+
+char *mystrrchr(const char* _Str,int _Val)
+{
+    const char* head = _Str;
+    while(*_Str++)
+        ;
+    --_Str;
+    while((*--_Str) && _Str!=head) {
+        if(*_Str == _Val)
+            return (char*)_Str;
+    }
+    return NULL;
+}
+
 void print(int r)
 {
     printf("\n**** new *** \n");
@@ -77,8 +99,24 @@ void print(int r)
 
 int main(void)
 {
+    printf("\n\n");
+    char string[17];
+    char *ptr,c='r';
     char d[20]="GoldenGlobal";
     char *s="View";
+    char *s1 = "Hello,Programmer";
+    char *s2 = "Hello,Programmer!";
+    int r;
+    strcpy(string,"Thisisastring");
+    ptr=mystrrchr(string,c);
+    if(ptr)
+        printf("The character %c is at position:%s\n" , c, ptr);
+    else
+        printf("The character was notfound\n");
+
+    printf("\nfinish\n");
+
+
     mystrcat(d,s);
     printf("%s\n", d);
 
@@ -86,9 +124,6 @@ int main(void)
     printf("%s",d);
     printf("\n");
 
-    char *s1 = "Hello,Programmer";
-    char *s2 = "Hello,Programmer!";
-    int r;
     r = memcmp(s1,s2,strlen(s1));
     print(r);
     r = mymemcmp(s1,s2,strlen(s1));
@@ -101,5 +136,6 @@ int main(void)
     print(r);
     r = linuxstrcmp(s1,s2);
     print(r);
+
     return 0;
 }
