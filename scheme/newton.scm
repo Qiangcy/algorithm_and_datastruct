@@ -63,3 +63,19 @@ new one
   (fact_iter 1 1))
 
 
+(define (f n)
+  (if (< n 3)
+    n
+    (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))
+    ))
+
+(define (f n)
+  (define (f_iter a b c counter result)
+    (if (< counter n)
+      (f_iter(+ a (* 2 b) (* 3 c)) a b  (+ counter 1) (+ a (* 2 b) (* 3 c)) result)
+      result)
+    )
+  (if (< n 3)
+    n
+    (f_iter (f 1) (f 2) (f 3) 3 0)))
+
