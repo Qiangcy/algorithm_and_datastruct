@@ -27,9 +27,8 @@ int main()
         int hamming_distance = 0;
         for(int j=0; j<len; ++j) {
             map<char,int> keylist;
-            for(int i=0; i<num; ++i) {
+            for(int i=0; i<num; ++i)
                 keylist[vec[i][j]]++;
-            }
             vector<int> v(keylist.size());
             transform(keylist.begin(), keylist.end(), v.begin(), get_second);
             sort(v.begin(), v.end(), cmp);
@@ -38,32 +37,22 @@ int main()
                 dupicate = 1;
             //for (int i=0; i<v.size(); i++)
             //    cout<<"v[i] is "<<v[i]<<endl;
-            char smallest = keylist.begin()->first;
-            for(map<char,int>::iterator it = keylist.begin(); it!=keylist.end(); ++it) {
-                if(it->second==v[0]) {
-                    if(!dupicate) {
-                        //                        cout<<"v[0] is "<<v[0]<<" it->first: "<<it->first<<endl;
-                        res[i++] = it->first;
-                        break;
-                    }else {
-                        if(it->first < smallest) {
-                            smallest = it->first;
-                        }
+            map<char,int>::iterator it = keylist.begin();
+            if(dupicate) {
+                res[i++] = it->first;
+            }else{
+                for(; it!=keylist.end(); ++it) {
+                    if(it->second==v[0]) {
+                            res[i++] = it->first;
+                            break;
                     }
                 }
             }
-            if(dupicate)
-                res[i++] = smallest;
-
-            for(map<char,int>::iterator it = keylist.begin(); it!=keylist.end(); ++it) {
-                //cout<<"count  *it : "<<it->first<<endl;
-                if(it->first != res[i-1]) {
-                    hamming_distance += it->second;
-                    //cout<<"hamming_distance is "<<hamming_distance<<endl;
-                }
-            }
+            hamming_distance += num - v[0];
         }
-        for(int k=0; k<i; ++k)
+        //        for(int k=0; k<i; ++k)
+        //            cout<<res[k];
+        for(int k=0; res[k]; ++k)
             cout<<res[k];
         cout<<endl<<hamming_distance<<endl;
         //cout<<endl<<"res end"<<endl<<endl;
