@@ -7,10 +7,11 @@ int main()
     int i;
     while((c=getchar()) !=EOF) {
         for(i=0; a[i]&&a[i]!=c; ++i)
-            if(!a[i])
-                putchar(c);
-            else
-                putchar(a[i-1]);
+            ;
+        if(!a[i])
+            putchar(c);
+        else
+            putchar(a[i-1]);
     }
     return 0;
 }
