@@ -2,34 +2,15 @@
 #include <string>
 using namespace std;
 
-int is_substr(string str, int start, int count)
+int is_substr(string str, int start)
 {
-//    if(!str[start+count])
-//        return 0;
-    int i = 0, tmp = start;
-    static int record = count;
-    cout<<endl<<"start is  "<<start<<endl;
-    while(str[i++] == str[tmp++]) {
-        cout<<" i is  \t "<<i<<"tmp is  \t"<<tmp<<"    \t"<<str[tmp]<<" "<<endl;
-        if(tmp-start == start) {// || tmp-start+1 == count
-            if((count=is_substr(str, tmp, count)))
-                return count;
-            else
+    for(int i=0; i<start; ++i) {
+        for(int n=1; start*n+i<str.length(); ++n) {
+            if(str[i] != str[start*n+i])
                 return 0;
         }
     }
-    if(str[i-1] != str[tmp-1] && str[i-1] && str[tmp-1] ) {
-        cout<<endl<<"str[i-1] is  "<<str[i-1]<<" str[tmp-1] is "<<str[tmp-1]<<endl;
-        return 0;
-    }
-    if(str[tmp]=='\0') {
-        cout<<"inside2"<<endl;
-        cout<<"record is "<<record<<endl;
-        return record;
-    }
-
-
-    return 0;
+    return 1;
 }
 
 int main()
@@ -39,26 +20,58 @@ int main()
     while(t--) {
         string str;
         cin>>str;
-        int count, record;
+        int count = 0;
         for(int i=1; str[i]; ++i) {
-            //            cout<<"str[i] is "<<str[i]<<endl;
             if(str[0] == str[i]) {
-//                if(count == 0)
-//                    count = i;
-                //cout<<endl<<"str[i] is , equal to str[0]"<<str[i]<<endl;
-                count = is_substr(str, i, i);
-                if(count != 0)
-                    cout<<"!=0 : count is "<<count<<endl;
-                //cout<<"count in equal  is "<<count<<endl;
-                i += count;
+                if(str.length()%i != 0)
+                    continue;
+                count = is_substr(str, i);
+                if(count != 0) {
+                    count = i;
+                    break;
+                }
             }
-//            else
-//            {
-//                 if(count!=0 && !is_substr(str, i, count))
-//                     count = 0;
-//            }
         }
-        cout<<endl<<endl<<"count is "<<count<<endl;
+        if(count == 0)
+            count = str.length();
+        if(!t)
+            cout<<count<<endl;
+        else
+            cout<<count<<endl<<endl;
     }
     return 0;
 }
+
+/* other people's solution
+#include <stdio.h>
+#include <string.h>
+#define maxn 80
+char s[maxn];
+int ans, l;
+
+bool check()
+{
+for (int i = ans; i < l; i++)
+if (s[i] != s[i % ans]) return false;
+return true;
+}
+
+int main()
+{
+int t;
+scanf("%d", &t);
+while (t--)
+{
+scanf( "%s", s);
+l = strlen(s);
+for (ans = 1; ans <= l; ans++)
+{
+if (l % ans != 0) continue;
+if (check()) break;
+}
+if (t==0) printf("%d\n",ans);
+else printf("%d\n\n",ans);
+}
+return 0;
+}
+*/
