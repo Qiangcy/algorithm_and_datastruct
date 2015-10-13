@@ -3,21 +3,20 @@
 #include <stdio.h>
 #include <string>
 using namespace std;
-const int max_size = 500;
+const int max_size = 5000;
 
 int is_substr(vector<int> &vec, int vec_begin, int start)
 {
-    if(start+1 >= max_size)
+    if(start+1 >= max_size-start)
         return 0;
+    //    cout<<"start inside is "<<start<<endl;
+    //    cout<<"vec begin is "<<vec_begin<<endl;
     for(int i=vec_begin; i<start; ++i) {
-        for(int n=1; start*n+i<vec.size(); ++n) {
-            if(vec[i] != vec[start*n+i])
-                //cout<<"vec [i] "<<vec[i]<<"vec[start*n+i]  "<<vec[start*n+i]<<endl;
+        for(int n=1; (start-vec_begin)*n+i<vec.size(); ++n) {
+            if(vec[i] != vec[(start-vec_begin)*n+i])
                 return 0;
         }
     }
-    //    cout<<"start inside is "<<start<<endl;
-    //    cout<<"vec begin is "<<vec_begin<<endl;
     return 1;
 }
 
@@ -42,14 +41,13 @@ int is_digital(vector<int> &vec, int start)
 {
     int num_of_digits = 0, is_repeat = 0;
     for(int i=start+1; i<vec.size(); ++i) {
+        //            cout<<"start is "<<start<<" i Is "<<i<<endl;
         if(vec[start] == vec[i]) {
-            //            cout<<"i Is "<<i<<endl;
             //            if(vec.size()%i != 0)
             //                continue;
             is_repeat = is_substr(vec, start, i);
             if(is_repeat != 0) {
                 num_of_digits = i - start;
-                //break;
                 return print(vec, start, i, num_of_digits);
             }
         }
@@ -58,24 +56,19 @@ int is_digital(vector<int> &vec, int start)
 }
 int main()
 {
-    double res;
     int a, b;
     while(cin>>a>>b) {
-        int num_of_digits=0, res = a/b;
+        int num_of_digits=0, origin_a = a;
         vector<int> vec;
         while(a >= b)
             a %= b;
         for(int i=0; i<max_size; ++i) {
-            num_of_digits = (double)a/b *10;
+            num_of_digits = (double)a/b * 10;
             vec.push_back(num_of_digits);
-            //        cout<<"num_of_digits is "<<num_of_digits<<endl;
-            a = a*10%b;
+            a = a * 10 % b;
         }
         vector<int>::iterator it = vec.begin();
-        for(; it!=vec.end(); ++it)
-            cout<<*it;
-        cout<<endl<<endl<<"start "<<endl;
-        cout<<res<<".";
+        cout<<origin_a<<"/"<<b<<" = "<<origin_a/b<<".";
         num_of_digits = 0;
         for(int i=0; i<vec.size(); ++i) {
             num_of_digits = is_digital(vec, i);
@@ -83,7 +76,7 @@ int main()
                 break;
         }
         cout<<")"<<endl;
-        cout<<"   "<<num_of_digits<<" = number of digits in repeating cycle"<<endl;
+        cout<<"   "<<num_of_digits<<" = number of digits in repeating cycle"<<endl<<endl;
     }
     return 0;
 }
