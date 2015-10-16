@@ -54,8 +54,7 @@ int main()
     while(cin>>a>>b) {
         int num_of_digits=0, origin_a = a;
         vector<int> vec;
-        while(a >= b)
-            a %= b;
+        a %= b;
         for(int i=0; i<max_size; ++i) {
             num_of_digits = (double)a/b * 10;
             vec.push_back(num_of_digits);
