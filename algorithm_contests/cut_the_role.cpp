@@ -6,8 +6,12 @@
 #include <string>
 using namespace std;
 
-int cut_rop(vector<int>&values, int left, int num)
+int cut_rop(vector<int>&values, int left, int num, vector<int>& memory)
 {
+    if(memory[left] > 0) {
+        cout<<endl<<"memory "<<endl;
+        return memory[left];
+    }
     int max_res = -100;
     if(left == 0) {
         cout<<" return 0"<<endl;
@@ -20,12 +24,19 @@ int cut_rop(vector<int>&values, int left, int num)
             break;
         }else {
             cout<<"values ["<<i<<"] "<<values[i]<<endl;
-            max_res = max(max_res, values[i]+cut_rop(values, left-i-1, num));
+            max_res = max(max_res, values[i]+cut_rop(values, left-i-1, num, memory));
             cout<<"max_res is "<<max_res<<endl;
         }
     }
-    return max_res;
+    return memory[left]=max_res;
 }
+
+int memorized_cut_rop(vector<int>&values, int left, int num)
+{
+    vector<int> memory(num, -1);
+    return cut_rop(values, left, num, memory);
+}
+
 
 int main(void)
 {
@@ -37,7 +48,7 @@ int main(void)
         cin>>tmp;
         values.push_back(tmp);
     }
-    int res = cut_rop(values, length, num);
+    int res = memorized_cut_rop(values, length, num);
     cout<<"res is "<<res<<endl;
     return 0;
 }
