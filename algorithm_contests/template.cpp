@@ -9,5 +9,6 @@ bool cmp(int i, int j) { return i<j; }
 
 int main(void)
 {
+    //freopen ("input.txt", "r", stdin);
     return 0;
 }
