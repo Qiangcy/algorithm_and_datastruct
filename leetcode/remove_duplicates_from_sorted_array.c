@@ -33,15 +33,38 @@ int removeDuplicates(int* nums, int numsSize) {
 }
 
 class Solution {
-public:
-    int removeDuplicates(vector<int>& nums) {
-        int i=0, j=0;
-        while(j < nums.size()) {
-            nums[i] = nums[j];
-            while(nums[i] == nums[j])
-                j++;
-            ++i;
+    public:
+        int removeDuplicates(vector<int>& nums) {
+            int i=0, j=0;
+            while(j < nums.size()) {
+                nums[i] = nums[j];
+                while(nums[i] == nums[j])
+                    j++;
+                ++i;
+            }
+            return i;
         }
-        return i;
-    }
+};
+
+class Solution {
+    public:
+        int removeDuplicates(vector<int>& nums) {
+            int i=0, j=0, flag=0;
+            while(j < nums.size()) {
+                nums[i] = nums[j];
+                if(j!=nums.size()-1) {
+                    while(nums[j] == nums[j+1])
+                        flag++;
+                }
+                if(flag>1) {
+                    nums[++i] = nums[j];
+                    j+=flag;
+                }else {
+                    ++j;
+                }
+                flag = 0;
+                ++i;
+            }
+            return i;
+        }
 };
