@@ -22,6 +22,69 @@ int main(void)
 #else
     // add i/o method of specific testing system
 #endif
+    int queues, nums, tmp, cases=1;
+    string command;
+    map<int, int> members;
+    while(cin>>queues && queues) {
+        cout<<"Scenario #"<<cases++<<endl;
+        queue<int> q_queues, q[1010];
+        for(int i=0; i<queues; ++i) {
+            cin>>nums;
+            for(int j=0; j<nums; ++j) {
+                cin>>tmp;
+                members[tmp] = i;
+            }
+        }
+        while(cin>>command) {
+            if(command == "ENQUEUE") {
+                cin>>tmp;
+                int t = members[tmp];
+                if(q[t].empty())
+                    q_queues.push(t);
+                q[t].push(tmp);
+            }else if(command == "DEQUEUE") {
+                int t = q_queues.front();
+                cout<<q[t].front()<<endl;
+                q[t].pop();
+                if(q[t].empty())
+                    q_queues.pop();
+            }else {
+                 break;
+            }
+
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+
+/*
+ *
+ *
+#include <iostream>
+#include <sstream>
+#include <set>
+#include <map>
+#include <queue>
+#include <cmath>
+#include <algorithm>
+#include <vector>
+#include <stdio.h>
+#include <string>
+using namespace std;
+bool cmp(queue<int> a, queue<int> b)
+{
+    return a.size() > b.size();
+}
+
+int main(void)
+{
+#ifdef LOCAL_PROJECT
+    freopen ("input.txt", "r", stdin);
+    //freopen("a.out","w",stdout); // console output is better (in most queues)
+#else
+    // add i/o method of specific testing system
+#endif
     int queues, num, tmp, rescnt=1, sort_flag=1;
     string command, str;
     while(cin>>queues && queues!=0) {
@@ -79,3 +142,4 @@ int main(void)
     }
     return 0;
 }
+*/
