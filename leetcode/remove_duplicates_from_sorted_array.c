@@ -1,3 +1,36 @@
+class Solution {
+    public:
+        int removeDuplicates(vector<int>& nums) {
+            int i=0, j=0;
+            while(j < nums.size()) {
+                nums[i] = nums[j];
+                while(nums[i] == nums[j])
+                    j++;
+                ++i;
+            }
+            return i;
+        }
+};
+
+/* use Set to solve */
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        set<int> a;
+        for(auto &it : nums) {
+            a.insert(it);
+        }
+        int i = 0;
+        for(auto &it : a) {
+             nums[i++] = it;
+        }
+        return a.size();
+    }
+};
+
+
+
+/* my silly solution before */
 int removeDuplicates_first(int* nums, int numsSize) {
     int i, j, k;
     for(i=0; i<numsSize; ++i) {
@@ -35,20 +68,6 @@ int removeDuplicates(int* nums, int numsSize) {
 class Solution {
     public:
         int removeDuplicates(vector<int>& nums) {
-            int i=0, j=0;
-            while(j < nums.size()) {
-                nums[i] = nums[j];
-                while(nums[i] == nums[j])
-                    j++;
-                ++i;
-            }
-            return i;
-        }
-};
-
-class Solution {
-    public:
-        int removeDuplicates(vector<int>& nums) {
             int i=0, j=0, flag=0;
             while(j < nums.size()) {
                 nums[i] = nums[j];
@@ -68,3 +87,4 @@ class Solution {
             return i;
         }
 };
+
