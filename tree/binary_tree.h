@@ -15,12 +15,11 @@ class Binary_tree {
         }
         Binary_tree* insert_left_child (Binary_tree* &B, Type insert_data);
         Binary_tree* insert_right_child (Binary_tree* &B, Type insert_data);
-        void pre_order (Binary_tree* &B, FunType fp);
+        void pre_order (Binary_tree* &B );
         void in_order (Binary_tree* &B);
         void post_order (Binary_tree* &B);
         void level_order (Binary_tree* &B);
 };
-typedef void (*FunType)(Binary_tree* &B);
 
 template <typename Type>
 Binary_tree<Type>* Binary_tree<Type>::insert_left_child(Binary_tree* &B, Type insert_data)
@@ -46,7 +45,7 @@ Binary_tree<Type>* Binary_tree<Type>::insert_right_child(Binary_tree* &B, Type i
 }
 
 template <typename Type>
-void Binary_tree<Type>::pre_order(Binary_tree* &B, FunType fp)
+void Binary_tree<Type>::pre_order(Binary_tree* &B)
 {
     if(!B)
         return;
