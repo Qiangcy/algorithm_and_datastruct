@@ -9,4 +9,3 @@ bool OperatersAnalyse( MyStack<string> &postfix_expression, MyStack<char> &opera
 double Calculate( MyStack<string> postfix_expression );
 
 double simple_caculate( double a, char oper, double b );
-
