@@ -26,7 +26,7 @@ bool OperatersAnalyse(MyStack<string> &postfix_expression, MyStack<char> &operat
             postfix_expression.pushme(a);
             temp = operaters.pop();
         }
-    }else if( Oper=='*' || Oper=='/' ) {
+    }else if(Oper=='*' || Oper=='/') {
         if(operaters.Top()!=0 &&
                 (operaters[operaters.Top()-1] == '*' || operaters[operaters.Top()-1] == '/')){
             while(operaters.Top()!=0 && operaters[ operaters.Top()-1 ]!='(') {
@@ -41,7 +41,7 @@ bool OperatersAnalyse(MyStack<string> &postfix_expression, MyStack<char> &operat
         }
         operaters.pushme(Oper);
     } else {//+ -
-        while( operaters.Top()!=0 && Oper!='(' && operaters[ operaters.Top()-1 ]!='(') {// && flag
+        while(operaters.Top()!=0 && Oper!='(' && operaters[ operaters.Top()-1 ]!='(') {
             temp = operaters.pop();
             char *p = &temp;
             string a(p);
@@ -52,7 +52,7 @@ bool OperatersAnalyse(MyStack<string> &postfix_expression, MyStack<char> &operat
     return true;
 }
 
-double Calculate( MyStack<string> postfix_expression )
+double Calculate(MyStack<string> postfix_expression)
 {
     MyStack<double> numbers;
     int length = postfix_expression.Top();
@@ -70,9 +70,9 @@ double Calculate( MyStack<string> postfix_expression )
     return numbers.pop();
 }
 
-double simple_caculate( double a, char oper, double b )
+double simple_caculate(double a, char oper, double b)
 {
-    double  result = 0;
+    double result = 0;
     switch( oper )
     {
         case '+': result = a+b; break;
