@@ -18,3 +18,21 @@ class Solution {
             return digits;
         }
 };
+
+class Solution {
+    public:
+        vector<int> plusOne(vector<int>& digits) {
+            const int n = digits.size();
+            for (int i = n - 1; i >= 0; --i) {
+                if (digits[i] == 9) {
+                    digits[i] = 0;
+                }else {
+                    digits[i]++;
+                    return digits;
+                }
+            }
+
+            digits.insert(begin(digits), 1);
+            return digits;
+        }
+};
