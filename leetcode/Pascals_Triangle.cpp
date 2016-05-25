@@ -25,3 +25,15 @@ class Solution {
             return a;
         }
 };
+
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<int> vec(rowIndex+1, 1);
+        for(int t=2; t<rowIndex+1; ++t) {
+            for(int i=t-1; i>0; --i)
+                vec[i] = vec[i-1] + vec[i];
+        }
+        return vec;
+    }
+};
