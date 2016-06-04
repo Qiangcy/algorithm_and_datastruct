@@ -29,3 +29,24 @@ public:
         return operators.empty();
     }
 };
+
+
+class Solution {
+public:
+    bool isValid(string s) {
+        string left =  "({[";
+        string right = ")}]";
+        stack<char> operators;
+        for(int i=0; i<s.length(); ++i) {
+            if(left.find(s[i]) != string::npos)
+                operators.push(s[i]);
+            else {
+                if(operators.empty() || operators.top() != left[right.find(s[i])])
+                    return false;
+                else
+                    operators.pop();
+            }
+        }
+        return operators.empty();
+    }
+};
