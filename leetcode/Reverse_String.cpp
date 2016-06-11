@@ -11,6 +11,20 @@ class Solution {
 public:
     string reverseString(string s) {
         const int len = s.length();
+        if(len <= 1) return s;
+        string left_str = s.substr(0, len/2);
+        string right_str = s.substr(len/2, len-len/2);
+        return reverseString(right_str) + reverseString(left_str) ;
+    }
+};
+
+
+
+
+class Solution {
+public:
+    string reverseString(string s) {
+        const int len = s.length();
         if(!len)
             return s;
         char tmp = ' ';
