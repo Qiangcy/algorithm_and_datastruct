@@ -7,39 +7,39 @@
  * };
  */
 class Solution {
-public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        int list_A_len = 0, list_B_len = 0, diff = 0;
-        ListNode *tmp_A = headA;
-        ListNode *tmp_B = headB;
-        while(tmp_A) {
-            tmp_A = tmp_A->next;
-            ++list_A_len;
-        }
-        while(tmp_B) {
-            tmp_B = tmp_B->next;
-            ++list_B_len;
-        }
-        diff = list_A_len - list_B_len;
-        if(diff > 0) {
-            while(diff--) {
-                headA = headA->next;
+    public:
+        ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+            int list_A_len = 0, list_B_len = 0, diff = 0;
+            ListNode *tmp_A = headA;
+            ListNode *tmp_B = headB;
+            while(tmp_A) {
+                tmp_A = tmp_A->next;
+                ++list_A_len;
             }
-        }else {
-            while(diff++) {
-                headB = headB->next;
+            while(tmp_B) {
+                tmp_B = tmp_B->next;
+                ++list_B_len;
             }
-        }
-        while(headA && headB) {
-            if(headA == headB) {
-                 return headA;
+            diff = list_A_len - list_B_len;
+            if(diff > 0) {
+                while(diff--) {
+                    headA = headA->next;
+                }
             }else {
-                headA = headA->next;
-                headB = headB->next;
+                while(diff++) {
+                    headB = headB->next;
+                }
             }
+            while(headA && headB) {
+                if(headA == headB) {
+                    return headA;
+                }else {
+                    headA = headA->next;
+                    headB = headB->next;
+                }
+            }
+            return nullptr;
         }
-        return nullptr;
-    }
 };
 
 
@@ -52,34 +52,64 @@ public:
  * };
  */
 class Solution {
-public:
-ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
-{
-    ListNode *p1 = headA;
-    ListNode *p2 = headB;
+    public:
+        ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+        {
+            ListNode *p1 = headA;
+            ListNode *p2 = headB;
 
-    if (p1 == NULL || p2 == NULL) return NULL;
+            if (p1 == NULL || p2 == NULL) return NULL;
 
-    while (p1 != NULL && p2 != NULL && p1 != p2) {
-        p1 = p1->next;
-        p2 = p2->next;
+            while (p1 != NULL && p2 != NULL && p1 != p2) {
+                p1 = p1->next;
+                p2 = p2->next;
 
-        //
-        // Any time they collide or reach end together without colliding
-        // then return any one of the pointers.
-        //
-        if (p1 == p2) return p1;
+                //
+                // Any time they collide or reach end together without colliding
+                // then return any one of the pointers.
+                //
+                if (p1 == p2) return p1;
 
-        //
-        // If one of them reaches the end earlier then reuse it
-        // by moving it to the beginning of other list.
-        // Once both of them go through reassigning,
-        // they will be equidistant from the collision point.
-        //
-        if (p1 == NULL) p1 = headB;
-        if (p2 == NULL) p2 = headA;
-    }
+                //
+                // If one of them reaches the end earlier then reuse it
+                // by moving it to the beginning of other list.
+                // Once both of them go through reassigning,
+                // they will be equidistant from the collision point.
+                //
+                if (p1 == NULL) p1 = headB;
+                if (p2 == NULL) p2 = headA;
+            }
 
-    return p1;
-}
+            return p1;
+        }
+};
+
+
+class Solution {
+    public:
+        ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+            if(headA!=nullptr || headB!=nullptr)
+                return nullptr;
+            ListNode *pA = headA, *pB = headB;
+            while(pA->next)
+                pA = pA->next;
+            ListNode *tail = pA;
+            pA->next = pB;
+            pA = headA;
+            while(pB && pB->next) {
+                 pB = pB->next->next;
+                 pA = pA->next;
+                 if(pB == pA)
+                     break;
+            }
+            if(pA != pB)
+                return nullptr;
+            pA = headA;
+            while(pA != pB) {
+                 pA = pA->next;
+                 pB = pB->next;
+            }
+            tail->next = nullptr;
+            return pA;
+        }
 };
