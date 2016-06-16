@@ -1,12 +1,12 @@
 class Solution {
 public:
     bool isPowerOfTwo(int n) {
-        if(!n || n<0)
+        if(n<=0)
             return false;
-        int sum_of_one = 0;
+        int nums_of_one = 0;
         for(int i=0; i<32; ++i) {
-            sum_of_one += n&1;
-            if(sum_of_one > 1)
+            nums_of_one += n&1;
+            if(nums_of_one > 1)
                 return false;
             n >>= 1;
         }
@@ -54,9 +54,10 @@ public:
         if(!n || n<0)
             return false;
 
-        int t = floor(log2(n));
-        int b = ceil(log2(n));
-        if(b-t == 0)
+        double tmp = log2(n);
+        int a = floor(tmp);
+        int b = ceil(tmp);
+        if(b-a == 0)
             return true;
         return false;
     }
