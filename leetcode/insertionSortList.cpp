@@ -32,3 +32,27 @@ public:
         return res->next;
     }
 };
+
+class Solution {
+    public:
+        ListNode *insertionSortList(ListNode *head) {
+            if(!head)
+                return NULL;
+            ListNode *h=new ListNode(0);
+            ListNode *cur=head;
+            ListNode *prev=h;
+            ListNode *next=NULL;
+            while(cur){
+                next=cur->next;
+                if(!prev||!prev->next||prev->next->val>=cur->val)prev=h;//I add this line
+                while(prev->next&&prev->next->val<cur->val){
+                    prev=prev->next;
+                }
+                cur->next=prev->next;
+                prev->next=cur;
+                //pre = helper; I erase this line;
+                cur=next;
+            }
+            return h->next;
+        }
+};
