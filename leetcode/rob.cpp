@@ -4,22 +4,23 @@
 /* P(k) = max(P(k−2) + M(k), P(k−1)) */
 class Solution {
     public:
-        unordered_map<int, int> cache;
-        int dp(vector<int>& nums, int i) {
-            if(i < 0)
-                return 0;
-            else if(i == 0)
-                return nums[0];
-            else if(cache[i])
-                return cache[i];
-            else {
-                int tmp = max(dp(nums, i-2)+nums[i], dp(nums, i-1));
-                cache[i] = tmp;
-                return tmp;
-            }
-        }
         int rob(vector<int>& nums) {
-            return dp(nums, nums.size()-1);
+            int n = nums.size();
+            vector<int> dp(n);
+            if(n == 0)
+                return 0;
+            if(n == 1)
+                return nums[0];
+            else if(n == 2)
+                return max(nums[0], nums[1]);
+            else {
+                dp[0] = nums[0];
+                dp[1] = max(nums[0], nums[1]);
+                for(int i=2; i<n; ++i) {
+                    dp[i] = max(dp[i-2]+nums[i], dp[i-1]);
+                }
+            }
+            return dp[n-1];
         }
 };
 
