@@ -10,13 +10,19 @@ public:
 
 class Solution {
 public:
-    int singleNumber(vector<int>& nums) {
-        const int vec_size = nums.size();
-        if(!vec_size)
-            return 0;
-        int a = nums[0];
-        for(int i=1; i<vec_size; ++i)
-            a ^= nums[i];
-        return a;
+    vector<int> singleNumber(vector<int>& nums) {
+        int res = accumulate(begin(nums), end(nums), 0, bit_xor<int>());
+        /* for(auto it : nums) */
+        /*     res ^= it; */
+        res &= -res;
+
+        vector<int> appear_once(2, 0);
+        for(auto it : nums) {
+            if((it & res) == 0)
+                appear_once[0] ^= it;
+            else
+                appear_once[1] ^= it;
+        }
+        return appear_once;
     }
 };
