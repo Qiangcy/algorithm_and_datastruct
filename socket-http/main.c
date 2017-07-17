@@ -35,14 +35,19 @@ int main(){
         return 0;
     }
 
-    char *request_header = "\
-        GET / HTTP/1.1\r\n\
-        host www.example.com\r\n\
-        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\r\n\
-        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\r\n\
-        Accept-Encoding: gzip, deflate, br\r\n\
-        Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2\r\n\
-        ";
+    /* char *request_header = "\ */
+/* GET / HTTP/1.1\r\n\ */
+/* HOST: %s\r\n\ */
+/* Cache-Control: no-cache\r\n\r\n"; */
+    char request_header[200];
+    strcat(request_header, "GET ");
+	strcat(request_header, "/");
+	strcat(request_header, " HTTP/1.1\r\n");
+	strcat(request_header, "HOST: ");
+	strcat(request_header, url);
+	strcat(request_header, "\r\n");
+	strcat(request_header,"Cache-Control: no-cache\r\n\r\n");
+	printf("-> HTTP请求报文如下\n--------HTTP Request--------\n%s\n", request_header);
 
     /* send the request */
     int total = strlen(request_header);
@@ -58,18 +63,22 @@ int main(){
         sent += bytes;
     } while (sent < total);
 
-    char response[4096];
+    char response[10*1024];
     memset(response, 0, sizeof(response));
     total = sizeof(response)-1;
     int received = 0;
     do {
-        int bytes = read(sock, response+received, total-received);
+        int bytes = recv(sock,  response+received, total-received, 0);
+        printf("received bytes %d \n", bytes);
+        /* int bytes = read(sock, response+received, total-received); */
         if (bytes < 0)
             printf("ERROR reading response from socket");
-        if (bytes == 0)
+        if (bytes == 0) {
+            printf("received bytes 0, break\n");
             break;
+        }
         printf("received bytes %d \n", bytes);
-        received+=bytes;
+        received += bytes;
     } while (received < total);
 
     if (received == total)
