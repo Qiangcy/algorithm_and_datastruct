@@ -8,10 +8,10 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
-int main(){
-    char *url = "www.example.com";
-    char address[30];
+
+char* getIPFromDNS(char *url) {
     struct hostent *server = gethostbyname(url);
+    char *address = (char*)malloc(50);
     if (server == NULL) {
         fprintf(stderr,"ERROR, no such host\n");
     }else {
@@ -24,31 +24,44 @@ int main(){
         }
     }
 
-    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    return address;
+}
+
+void generate_request_header(char *request_header)
+{
+    /* char *request_header = "\ */
+/* GET / HTTP/1.1\r\n\ */
+/* HOST: %s\r\n\ */
+/* Cache-Control: no-cache\r\n\r\n"; */
+    strcat(request_header, "GET ");
+	strcat(request_header, "/");
+	strcat(request_header, " HTTP/1.1\r\n");
+	strcat(request_header, "HOST: ");
+	/* strcat(request_header, url); */
+	strcat(request_header, "www.baidu.com");
+	strcat(request_header, "\r\n");
+	strcat(request_header,"Cache-Control: no-cache\r\n\r\n");
+	printf("-> HTTP请求报文如下\n--------HTTP Request--------\n%s\n", request_header);
+}
+
+int main(){
+    char *url = "localhost";
+    char *address = getIPFromDNS(url);
+
     struct sockaddr_in serv_addr;
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = inet_addr(address);
-    serv_addr.sin_port = htons(80);
+    serv_addr.sin_port = htons(12345);
+
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
         printf("connect err");
         return 0;
     }
 
-    /* char *request_header = "\ */
-/* GET / HTTP/1.1\r\n\ */
-/* HOST: %s\r\n\ */
-/* Cache-Control: no-cache\r\n\r\n"; */
     char request_header[200];
-    strcat(request_header, "GET ");
-	strcat(request_header, "/");
-	strcat(request_header, " HTTP/1.1\r\n");
-	strcat(request_header, "HOST: ");
-	strcat(request_header, url);
-	strcat(request_header, "\r\n");
-	strcat(request_header,"Cache-Control: no-cache\r\n\r\n");
-	printf("-> HTTP请求报文如下\n--------HTTP Request--------\n%s\n", request_header);
-
+    generate_request_header(request_header);
     /* send the request */
     int total = strlen(request_header);
     int sent = 0;
@@ -63,14 +76,15 @@ int main(){
         sent += bytes;
     } while (sent < total);
 
+
     char response[10*1024];
     memset(response, 0, sizeof(response));
     total = sizeof(response)-1;
     int received = 0;
     do {
         int bytes = recv(sock,  response+received, total-received, 0);
+        printf("Response:\n%s\n",response);
         printf("received bytes %d \n", bytes);
-        /* int bytes = read(sock, response+received, total-received); */
         if (bytes < 0)
             printf("ERROR reading response from socket");
         if (bytes == 0) {
@@ -86,5 +100,7 @@ int main(){
 
     close(sock);
     printf("Response:\n%s\n",response);
+
+    free(address);
     return 0;
 }
